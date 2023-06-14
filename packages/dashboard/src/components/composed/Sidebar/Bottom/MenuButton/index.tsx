@@ -1,7 +1,7 @@
 import { Menu, Text, useMantineColorScheme, createStyles } from "@mantine/core";
 import { showNotification, hideNotification } from "@mantine/notifications";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { InjectedConnector } from "@wagmi/core";
+import { WalletConnectConnector } from "@wagmi/core/connectors/walletConnect";
 import { Slash } from "react-feather";
 import { useDash } from "src/hooks";
 import Button from "src/components/composed/Sidebar/Bottom/MenuButton/Button";
@@ -28,7 +28,11 @@ const useStyles = createStyles((theme, _params, _getRef) => {
 });
 
 function MenuButton(): JSX.Element {
-  const { connect } = useConnect({ connector: new InjectedConnector() });
+  const { connect } = useConnect({
+    connector: new WalletConnectConnector({
+      options: {}
+    })
+  });
   const { disconnect } = useDisconnect();
   const { isConnected } = useAccount();
   const {
